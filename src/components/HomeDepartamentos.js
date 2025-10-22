@@ -80,7 +80,7 @@ export default class HomeDepartamentos extends Component {
                         dept.localidad
                       }
                     >
-                      Update
+                      update
                     </NavLink>
                   </td>
                 </tr>
