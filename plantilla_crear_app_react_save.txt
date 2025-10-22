@@ -1,0 +1,140 @@
+🧩 PLANTILLA – Crear una App React desde Cmder
+
+🔹 1. Crear el proyecto con Create React App
+npx create-react-app nombre-de-tu-app
+
+Ejemplo:
+npx create-react-app mi-app-react
+
+Luego entra en la carpeta del proyecto:
+cd mi-app-react
+
+🔹 2. Instalar dependencias adicionales
+npm install --save axios react-router-dom bootstrap jquery popper.js
+
+🔹 3. Limpiar el proyecto inicial
+del src\App.test.js src\logo.svg src\reportWebVitals.js src\setupTests.js
+
+🔹 4. Estructura básica de carpetas
+mkdir src\components src\pages src\services src\styles
+
+🔹 5. Configurar Bootstrap y jQuery en el proyecto
+En src/index.js añade:
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'jquery';
+import 'popper.js';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+🔹 6. Configurar React Router DOM
+En src/App.js:
+
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+
+function App() {
+  return (
+    <Router>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
+        <Link className="navbar-brand" to="/">Mi App React</Link>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item"><Link className="nav-link" to="/">Inicio</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/contact">Contacto</Link></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div className="container mt-4">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+🔹 7. Crear páginas básicas
+
+src/pages/Home.js
+import React from "react";
+function Home() {
+  return (
+    <div className="text-center">
+      <h1>Bienvenido a mi App React</h1>
+      <p>Usando Bootstrap, Router y Axios 🚀</p>
+    </div>
+  );
+}
+export default Home;
+
+src/pages/Contact.js
+import React from "react";
+function Contact() {
+  return (
+    <div className="text-center">
+      <h1>Contacto</h1>
+      <p>Envíanos un mensaje o consulta.</p>
+    </div>
+  );
+}
+export default Contact;
+
+🔹 8. Configurar Axios (servicio de ejemplo)
+
+src/services/api.js
+import axios from "axios";
+const api = axios.create({
+  baseURL: "https://jsonplaceholder.typicode.com",
+});
+export default api;
+
+Ejemplo de uso:
+import React, { useEffect, useState } from "react";
+import api from "../services/api";
+
+function Home() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    api.get("/posts?_limit=5").then((res) => setPosts(res.data));
+  }, []);
+
+  return (
+    <div>
+      <h1>Últimos Posts</h1>
+      <ul className="list-group">
+        {posts.map((post) => (
+          <li key={post.id} className="list-group-item">
+            <strong>{post.title}</strong>
+            <p>{post.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Home;
+
+🔹 9. Ejecutar la aplicación
+npm start
+
+Se abrirá en:
+http://localhost:3000
+
+🔹 10. (Opcional) Inicializar Git y subir a GitHub
+git init
+git add .
+git commit -m "Inicio de proyecto React con Bootstrap, Router y Axios"
